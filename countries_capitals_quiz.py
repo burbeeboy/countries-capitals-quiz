@@ -209,21 +209,44 @@ def get_capital():
     # Ask the user to input a country
     country = input("Enter a country: ").upper()
     # Check if the country is in the dictionary
-    if country in countries_and_capitals:
-        print(f"The capital of {country} is {countries_and_capitals[country]}")
-    else:
+    try:
+        if isinstance(countries_and_capitals[country], list):
+            print(f"The capital of {country} is either {' or '.join(countries_and_capitals[country])}")
+        elif isinstance(countries_and_capitals[country], str):
+            print(f"The capital of {country} is {countries_and_capitals[country]}")
+    except KeyError:
         print(f"Sorry, that country isn't in the dictionary.")
+    # Ask the user if they would like another capital
+    def another_capital():
+        another = input("Would you like to look up another capital? (yes/no) ").lower()
+        if another == "yes":
+            get_capital()
+        elif another == "no":
+            print("Goodbye! Try having a go at the quiz to test your knowledge of capitals!")
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+    another_capital()
+
 
 def quiz_user():
-    #Randomly select a country and its capital
-    country, capital = random.choice(list(countries_and_capitals.items()))
-    # Ask the user to match the capital with the country
-    user_input = input(f"What is the capital of {country}? ").upper()
-    # Check if the user's answer is correct
-    if user_input in capital:
-        print("Correct!")
-    else:
-        print(f"Wrong! The capital of {country} is {capital}")
+    # Ask the user how many questions they want to answer
+    num_questions = int(input("How many questions would you like to answer? "))
+    for _ in range(num_questions):
+        # Randomly select a country and its capital
+        country, capital = random.choice(list(countries_and_capitals.items()))
+        # Ask the user to match the capital with the country
+        user_input = input(f"What is the capital of {country}? ").upper()
+        # Check if the user's answer is correct
+        if isinstance(capital, list):
+            if user_input in capital:
+                print("Correct!")
+            else:
+                print(f"Wrong! The capital of {country} is {' or '.join(capital)}.")
+        else:
+            if user_input == capital:
+                print("Correct!")
+            else:
+                print(f"Wrong! The capital of {country} is {capital}.")
 
 def main():
     while True:
