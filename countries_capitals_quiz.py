@@ -232,6 +232,7 @@ def get_capital():
 def quiz_user():
     # Ask the user how many questions they want to answer
     num_questions = int(input("How many questions would you like to answer? "))
+    score = 0
     for _ in range(num_questions):
         # Randomly select a country and its capital
         country, capital = random.choice(list(countries_and_capitals.items()))
@@ -241,13 +242,18 @@ def quiz_user():
         if isinstance(capital, list):
             if user_input in capital:
                 print("Correct!")
+                score += 1
             else:
                 print(f"Wrong! The capital of {country} is {' or '.join(capital)}.")
         else:
             if user_input == capital:
                 print("Correct!")
+                score += 1
             else:
                 print(f"Wrong! The capital of {country} is {capital}.")
+    print("-----------------------------------------------")
+    print(f"Your final score is: {score}/{num_questions}")
+    print("-----------------------------------------------")
 
 def main():
     while True:
