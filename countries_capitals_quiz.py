@@ -6,7 +6,7 @@ import random
 
 # Create a dictionary of countries and their capitals
 countries_and_capitals = {
-    "AFGHANISTAN": "KABUL",
+"AFGHANISTAN": "KABUL",
 "ALBANIA": "TIRANA",
 "ALGERIA": "ALGIERS",
 "ANDORRA": "ANDORRA LA VELLA",
@@ -207,25 +207,26 @@ countries_and_capitals = {
 
 def get_capital():
     # Ask the user to input a country
-    country = input("Enter a country: ").upper()
-    # Check if the country is in the dictionary
-    try:
-        if isinstance(countries_and_capitals[country], list):
-            print(f"The capital of {country} is either {' or '.join(countries_and_capitals[country])}")
-        elif isinstance(countries_and_capitals[country], str):
-            print(f"The capital of {country} is {countries_and_capitals[country]}")
-    except KeyError:
-        print(f"Sorry, that country isn't in the dictionary.")
-    # Ask the user if they would like another capital
-    def another_capital():
-        another = input("Would you like to look up another capital? (yes/no) ").lower()
+    while True:
+        country = input("Enter a country: ").upper()
+        # Check if the country is in the dictionary
+        try:
+            if isinstance(countries_and_capitals[country], list):
+                print(f"The capital of {country} is either {' or '.join(countries_and_capitals[country])}")
+            elif isinstance(countries_and_capitals[country], str):
+                print(f"The capital of {country} is {countries_and_capitals[country]}")
+        except KeyError:
+            print(f"Sorry, that country isn't in the dictionary.")
+        # Ask the user if they would like another capital
+        while True:
+            another = input("Would you like to look up another capital? (yes/no) ").lower()
+            if another in ["yes", "no"]:
+                break
+            print("Invalid input, please enter 'yes' or 'no'.")
         if another == "yes":
-            get_capital()
-        elif another == "no":
-            print("Goodbye! Try having a go at the quiz to test your knowledge of capitals!")
+            continue
         else:
-            print("Invalid input. Please enter 'yes' or 'no'.")
-    another_capital()
+            break
 
 
 def quiz_user():
